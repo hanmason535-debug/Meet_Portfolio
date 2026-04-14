@@ -9,13 +9,18 @@ import ContactSection from "@/components/section/contact-section";
 import HackathonsSection from "@/components/section/hackathons-section";
 import ProjectsSection from "@/components/section/projects-section";
 import WorkSection from "@/components/section/work-section";
+import CertificationsSection from "@/components/section/certifications-section";
+import ProgressNav from "@/components/progress-nav";
 import { ArrowUpRight } from "lucide-react";
 
 const BLUR_FADE_DELAY = 0.04;
 
 export default function Page() {
   return (
-    <main className="min-h-dvh flex flex-col gap-14 relative">
+    <>
+      {/* Cat 1 Fix 1 + Cat 2 Fix 2 + Cat 6 Fix 1: ProgressNav with IntersectionObserver */}
+      <ProgressNav />
+      <main className="min-h-dvh flex flex-col gap-14 relative">
       <section id="hero">
         <div className="mx-auto w-full max-w-2xl space-y-8">
           <div className="gap-2 gap-y-6 flex flex-col md:flex-row justify-between">
@@ -33,8 +38,10 @@ export default function Page() {
               />
             </div>
             <BlurFade delay={BLUR_FADE_DELAY} className="order-1 md:order-2">
+            {/* Cat 2 Fix 3: size-24/size-32 reserves layout space, preventing CLS.
+                width/height props are forwarded to the underlying <img> element. */}
               <Avatar className="size-24 md:size-32 border rounded-full shadow-lg ring-4 ring-muted">
-                <AvatarImage alt={DATA.name} src={DATA.avatarUrl} />
+                <AvatarImage alt={DATA.name} src={DATA.avatarUrl} width={128} height={128} />
                 <AvatarFallback>{DATA.initials}</AvatarFallback>
               </Avatar>
             </BlurFade>
@@ -102,7 +109,8 @@ export default function Page() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1 text-xs tabular-nums text-muted-foreground text-right flex-none">
+                  {/* Cat 7 Fix 1: monospace for date data labels */}
+                  <div className="flex items-center gap-1 data-label text-muted-foreground text-right flex-none">
                     <span>
                       {education.start} - {education.end}
                     </span>
@@ -113,6 +121,17 @@ export default function Page() {
           </div>
         </div>
       </section>
+      {/* Cat 3 Fix 2 + Cat 4 Fix 1 + Cat 5 Fix 3 + Cat 6 Fix 2: certifications section */}
+      <section id="certifications">
+        <div className="flex min-h-0 flex-col gap-y-6">
+          <BlurFade delay={BLUR_FADE_DELAY * 8}>
+            <h2 className="text-xl font-bold">Certifications</h2>
+          </BlurFade>
+          <BlurFade delay={BLUR_FADE_DELAY * 8.5}>
+            <CertificationsSection />
+          </BlurFade>
+        </div>
+      </section>
       <section id="skills">
         <div className="flex min-h-0 flex-col gap-y-4">
           <BlurFade delay={BLUR_FADE_DELAY * 9}>
@@ -121,7 +140,8 @@ export default function Page() {
           <div className="flex flex-wrap gap-2">
             {DATA.skills.map((skill, id) => (
               <BlurFade key={skill.name} delay={BLUR_FADE_DELAY * 10 + id * 0.05}>
-                <div className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center gap-2">
+                {/* Cat 7 Fix 2: cyber accent applied on hover via .skill-badge CSS class */}
+                <div className="skill-badge border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center gap-2">
                   {skill.icon && <skill.icon className="size-4 rounded overflow-hidden object-contain" />}
                   <span className="text-foreground text-sm font-medium">{skill.name}</span>
                 </div>
@@ -146,5 +166,6 @@ export default function Page() {
         </BlurFade>
       </section>
     </main>
+    </>
   );
 }

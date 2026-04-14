@@ -1,6 +1,43 @@
+"use client";
+import { useState } from "react";
 import Link from "next/link";
+import { Copy, Check } from "lucide-react";
 import { FlickeringGrid } from "@/components/magicui/flickering-grid";
 import { DATA } from "@/data/resume";
+
+/**
+ * Cat 5 Fix 2: Heading reduced from text-3xl sm:text-5xl → text-2xl sm:text-3xl.
+ * Cat 6 Fix 3: Email and phone show copy-to-clipboard with visual check-mark feedback.
+ */
+
+function CopyButton({ value, label }: { value: string; label: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard API unavailable – silently fail.
+    }
+  };
+
+  return (
+    <button
+      onClick={handleCopy}
+      aria-label={`Copy ${label}`}
+      className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+    >
+      {value}
+      {copied ? (
+        <Check className="h-3.5 w-3.5 text-[var(--accent-cyber)]" aria-hidden />
+      ) : (
+        <Copy className="h-3.5 w-3.5" aria-hidden />
+      )}
+    </button>
+  );
+}
 
 export default function ContactSection() {
   return (
@@ -20,7 +57,8 @@ export default function ContactSection() {
         />
       </div>
       <div className="relative flex flex-col items-center gap-4 text-center">
-        <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+        {/* Cat 5 Fix 2: reduced heading size for hierarchy consistency */}
+        <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl">
           Get in Touch
         </h2>
         <p className="mx-auto max-w-lg text-muted-foreground text-balance">
@@ -36,8 +74,14 @@ export default function ContactSection() {
           and I&apos;ll respond whenever I can. I will ignore all
           soliciting.
         </p>
+        {/* Cat 6 Fix 3: quick-copy row for email and phone */}
+        <div className="flex flex-wrap justify-center gap-4 pt-1">
+          <CopyButton value={DATA.contact.email} label="email address" />
+          <CopyButton value={DATA.contact.tel} label="phone number" />
+        </div>
       </div>
     </div>
   );
 }
+
 

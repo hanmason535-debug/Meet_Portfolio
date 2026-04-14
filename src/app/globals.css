@@ -9,6 +9,8 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  /* Cat 7 Fix 2: expose cyber accent to Tailwind */
+  --color-cyber: var(--accent-cyber);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -44,6 +46,12 @@
 
 :root {
   --radius: 0.625rem;
+  /* Cyber-themed accent: terminal green (Cat 7 Fix 2) */
+  --accent-cyber: oklch(0.72 0.19 145);
+  /* Contact / hero button accent colors (Cat 3 Fix 1) */
+  --accent-email: oklch(0.65 0.22 259);
+  --accent-phone: oklch(0.72 0.19 145);
+  --accent-linkedin: oklch(0.55 0.18 235);
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -118,6 +126,48 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Cat 7 Fix 2: skill badge cyber-accent hover ring */
+  .skill-badge {
+    transition: box-shadow 0.15s ease;
+  }
+
+  .skill-badge:hover {
+    box-shadow: 0 0 0 2px color-mix(in oklch, var(--accent-cyber) 40%, transparent);
+  }
+
+  /* Cat 7 Fix 1: monospace class for date/data labels */
+  .data-label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Cat 7 Fix 3: scanning-line animation for cyber-themed skeleton cards */
+  @keyframes scan-line {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+  }
+
+  .scanning-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scanning-card::after {
+    content: "";
+    position: absolute;
+    inset-x: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-cyber), transparent);
+    animation: scan-line 2s ease-in-out infinite;
+  }
+
+  /* Cat 6 Fix 1: ProgressNav dot hover ring pulse */
+  @keyframes ring-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklch, var(--accent-cyber) 60%, transparent); }
+    50% { box-shadow: 0 0 0 4px color-mix(in oklch, var(--accent-cyber) 0%, transparent); }
   }
 
   /* Shiki dual theme support */
