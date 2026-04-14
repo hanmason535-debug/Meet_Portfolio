@@ -60,6 +60,14 @@ export function ProjectCard({
         "flex flex-col h-full border border-border rounded-xl overflow-hidden hover:ring-2 cursor-pointer hover:ring-muted transition-all duration-200",
         className
       )}
+      /* Cat 1 Fix 3: will-change applied dynamically only while hovered to avoid
+         permanent GPU layer allocation. */
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLDivElement).style.willChange = "transform";
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLDivElement).style.willChange = "auto";
+      }}
     >
       <div className="relative shrink-0">
         <Link
@@ -109,7 +117,8 @@ export function ProjectCard({
         <div className="flex items-start justify-between gap-2">
           <div className="flex flex-col gap-1">
             <h3 className="font-semibold">{title}</h3>
-            <time className="text-xs text-muted-foreground">{dates}</time>
+            {/* Cat 7 Fix 1: monospace for data labels (dates) */}
+            <time className="data-label text-muted-foreground">{dates}</time>
           </div>
           <Link
             href={href || "#"}

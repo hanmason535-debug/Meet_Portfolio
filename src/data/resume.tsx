@@ -155,6 +155,44 @@ export const DATA = {
         "Designed and implemented a robust password encryption and browser cookie storage system in Ruby on Rails. Leveraged the Yahoo finance API to develop the dividend.com equity screener",
     },
   ],
+  certifications: [
+    {
+      name: "AWS Certified Solutions Architect – Associate",
+      issuer: "Amazon Web Services",
+      issued: "Jan 2023",
+      expires: "Jan 2026",
+      credlyUrl:
+        "https://www.credly.com/badges/example-aws-saa",
+      logoUrl: "https://images.credly.com/size/340x340/images/0e284c3f-5164-4b21-8660-0d84737941bc/image.png",
+    },
+    {
+      name: "Google Professional Cloud Developer",
+      issuer: "Google Cloud",
+      issued: "Mar 2023",
+      expires: "Mar 2025",
+      credlyUrl:
+        "https://www.credly.com/badges/example-gcp-dev",
+      logoUrl: "https://images.credly.com/size/340x340/images/08096465-cbfc-4c3e-93e5-93c5aa61f23e/image.png",
+    },
+    {
+      name: "Meta Front-End Developer Professional Certificate",
+      issuer: "Meta",
+      issued: "Jun 2022",
+      expires: undefined,
+      credlyUrl:
+        "https://www.credly.com/badges/example-meta-fe",
+      logoUrl: "",
+    },
+    {
+      name: "Certified Kubernetes Application Developer (CKAD)",
+      issuer: "Cloud Native Computing Foundation",
+      issued: "Sep 2022",
+      expires: "Sep 2025",
+      credlyUrl:
+        "https://www.credly.com/badges/example-ckad",
+      logoUrl: "",
+    },
+  ],
   education: [
     {
       school: "Buildspace",
